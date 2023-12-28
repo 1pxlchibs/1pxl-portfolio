@@ -1,0 +1,24 @@
+{
+  "ascii": [
+  " ██╗██████╗ ██╗  ██╗██╗      ██████╗██╗  ██╗██╗██████╗ ███████╗",
+  "███║██╔══██╗╚██╗██╔╝██║     ██╔════╝██║  ██║██║██╔══██╗██╔════╝",
+  "╚██║██████╔╝ ╚███╔╝ ██║     ██║     ███████║██║██████╔╝███████╗",
+  " ██║██╔═══╝  ██╔██╗ ██║     ██║     ██╔══██║██║██╔══██╗╚════██║",
+  " ██║██║     ██╔╝ ██╗███████╗╚██████╗██║  ██║██║██████╔╝███████║",
+  " ╚═╝╚═╝     ╚═╝  ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═════╝ ╚══════╝"
+  ],
+  "social": {
+    "email": "enriquepoirier@gmail.com",
+    "github": "1pxlchibs",
+    "linkedin": "Enrique Poirier",
+    "xtwitter": "1pxlchibs"
+  },
+  "aboutGreeting": "Hi I'm Enrique. A self thought game developer.",
+  "projects": [
+    [
+      "Neon Blight",
+      "Top Down Cyberpunk Bullet Hell shooter",
+      "https://store.steampowered.com/app/1360660/Neon_Blight/?curator_clanid=4777282"
+    ]
+  ]
+}
