@@ -25,7 +25,7 @@ const helloObj = {
       "Heya!",
     ],
     [
-      "Greetings human!he",
+      "Greetings human!",
     ],
   ],
 }

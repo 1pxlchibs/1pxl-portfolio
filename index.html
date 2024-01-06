@@ -10,9 +10,13 @@
   <script src="https://kit.fontawesome.com/d5effce557.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script>
-  function playSound() {
+    function playSound() {
         var sound = new Audio("/res/type_tone.mp3");
         sound.play();
+    }
+    function hideTerminal() {
+      const terminal = document.getElementById("main");
+      terminal.style.display = "none";
     }
   </script>
   <title>Enrique Poirier</title>
@@ -23,16 +27,10 @@
   <div id="blur"></div>
   <main id="main">
     <div id="bars">
-      <div id="bar-1">terminal.exe</div>
+      <div id="bar-1">terminal.exe <a id="exit-button" class="fa-solid fa-xmark" onclick="hideTerminal()"></a></div>
     </div>
     <br>
     <div id="terminal">
-      <div>
-        <span id="prompt"><span style="color: var(--prompt-1)">guest</span><span
-            style="color: var(--prompt-default)">@</span><span style="color: var(--prompt-2)">5_os.dev</span><span
-            style="color: var(--prompt-default)">:$ ~</span>
-        </span>
-      </div>
       <!-- command output will be inserted before #write-lines-->
       <a id="write-lines"></a>
     </div>

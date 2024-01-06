@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;300;400;600&family=Pixelify+Sans&family=VT323&display=swap');
 
 :root {
-  background-image: url("/res/yellowstone-day-0.png");
+  background-color: #020202;
   background-size: cover;
   font-family: 'IBM Plex Mono', monospace;
   font-weight: 200;
@@ -54,6 +54,12 @@
 	to {transform: rotateY(360deg);}
 }
 
+
+@keyframes main {
+	from {opacity: 0%; height: 0%;}
+	to {opacity: 100%; height: 100%;}
+}
+
 html,
 body {
   color: var(--text);
@@ -74,10 +80,13 @@ body {
 }
 
 main {
+  animation: main ease-out 1s 1s forwards;
+  height: 0%;
+  opacity: 0%;
   display: block;
   box-sizing: border-box;
   backdrop-filter: blur(10px);
-  height: 100%;
+  background-color: #0202022c;
   border: var(--border) solid 2px;
   border-radius: 2px;
   overflow-y: auto;
@@ -141,6 +150,20 @@ input {
   width: 0%;
 }
 
+#exit-button {
+  color: black;
+  line-height: 36px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  justify-content: space-between;
+  display: flex;
+}
+
+#exit-button:hover {
+  color: var(--text);
+}
+
 a {
   color: var(--prompt-2);
 }
@@ -152,6 +175,7 @@ a:hover {
 
 #bars {
   font-family: 'Pixelify Sans', sans-serif;
+  
   font-size: 20px;
   position: -webkit-sticky;
   position: sticky;
@@ -166,6 +190,10 @@ a:hover {
   color: var(--bg);
   line-height: 36px;
   padding-left: 10px;
+  padding-right: 10px;
+
+  justify-content: space-between;
+  display: flex;
 }
 
 #terminal {

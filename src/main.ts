@@ -19,6 +19,7 @@ let bareMode = false;
 
 //WRITELINESCOPY is used to during the "clear" command
 const WRITELINESCOPY = mutWriteLines;
+const ROOT = document.documentElement;
 const TERMINAL = document.getElementById("terminal");
 const USERINPUT = document.getElementById("user-input") as HTMLInputElement;
 const INPUT_HIDDEN = document.getElementById("input-hidden");
@@ -28,7 +29,14 @@ const PROMPT = document.getElementById("prompt");
 const COMMANDS = ["help", "about", "projects", "whoami", "banner", "clear"];
 const HISTORY : string[] = [];
 const SUDO_PASSWORD = "050823";
-
+const backgroundImages: string[] = [
+  'url(res/background_1.png)',
+  'url(res/background_2.png)',
+  'url(res/background_3.png)',
+  'url(res/background_4_1.png)',
+  'url(res/background_5.png)',
+  // Add more image URLs as needed
+];
 
 const scrollToBottom = () => {
   const MAIN = document.getElementById("main");
@@ -386,12 +394,23 @@ function easterEggStyles() {
 
 }
 
+function getRandomImage(): string {
+  const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+  return backgroundImages[randomIndex];
+}
+
 const initEventListeners = () => {
   window.addEventListener('load', () => {
-    writeLines(BANNER);
+    ROOT.style.setProperty('background-image',getRandomImage());
+    setTimeout(() => {
+      writeLines(BANNER);
     
-    USERINPUT.addEventListener('keydown', userInputHandler);
-    PASSWORD_INPUT.addEventListener('keydown', userInputHandler);
+      USERINPUT.addEventListener('keydown', userInputHandler);
+      PASSWORD_INPUT.addEventListener('keydown', userInputHandler);
+  
+      
+    },2000)
+    
   });
   
   window.addEventListener('click', () => {
