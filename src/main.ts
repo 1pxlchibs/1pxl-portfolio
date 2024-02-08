@@ -188,8 +188,10 @@ function commandHandler(input : string) {
   }
 
   if(input.startsWith("more") && !bareMode) {
-    if(input === "more Neon Blight" && input.trim() !== "more"){
-      writeLines(["Nothing to see here.", "<br>"])
+    if(input.toLowerCase().includes("neonblight") || input.toLowerCase().includes("nb") || input.toLowerCase().includes("neon blight")){
+      writeLines(['<iframe width="560" height="315" src="https://www.youtube.com/embed/DV5VYDS-g1M?si=p8ZdhfhLfuuVPDc6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+      "<br>",
+      "Description:<br>Neon Blight is a top down bullet hell where you run a shop selling guns and relics you find in the outer border. <br>Fight through bosses and get access to the ultimate weapon!"])
       return
     } else{
     writeLines(["Please specify the project name.", "<br>"])

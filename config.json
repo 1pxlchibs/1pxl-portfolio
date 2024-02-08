@@ -11,14 +11,24 @@
     "email": "enriquepoirier@gmail.com",
     "github": "1pxlchibs",
     "linkedin": "Enrique Poirier",
-    "xtwitter": "1pxlchibs"
+    "xtwitter": "1pxlchibs",
+    "bluesky": "1pxlchibs.bsky.social"
   },
-  "aboutGreeting": "Hi I'm Enrique. ",
   "projects": [
     [
       "Neon Blight",
-      "Top Down Cyberpunk Bullet Hell shooter",
+      "Top down cyberpunk bullet hell shooter",
       "https://store.steampowered.com/app/1360660/Neon_Blight/?curator_clanid=4777282"
+    ],
+    [
+      "PXLUI",
+      "A gml library built for the creation of UI systems.",
+      "https://github.com/1pxlchibs/PXLUI"
+    ],
+    [
+      "████████",
+      "Unannounced game project set in the Neon Blight universe.",
+      ""
     ]
   ]
 }
