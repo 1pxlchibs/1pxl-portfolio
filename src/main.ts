@@ -205,6 +205,12 @@ function commandHandler(input : string) {
     return
   }
 
+  if(input.startsWith("spotify") && !bareMode) {
+    writeLines(["<br>","My spotify playlist to get in the zone!",
+    "<iframe style='border-radius:12px' src='https://open.spotify.com/embed/playlist/7B1IDMuwobKOAIPqd9bgTp?utm_source=generator' width='40%' height='352' frameBorder='0' allowfullscreen='' allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture' loading='lazy'></iframe>"])
+    return
+  }
+
   switch(input) {
     case 'clear':
       setTimeout(() => {

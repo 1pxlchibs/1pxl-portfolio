@@ -25,6 +25,10 @@ const helpObj = {
       "Display the banner."
     ],
     [
+      "'spotify'",
+      "Sharing my spotify playlists!"
+    ],
+    [
       "'clear'",
       "Clear the terminal."
     ]
