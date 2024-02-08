@@ -193,10 +193,16 @@ function commandHandler(input : string) {
       "<br>",
       "Description:<br>Neon Blight is a top down bullet hell where you run a shop selling guns and relics you find in the outer border. <br>Fight through bosses and get access to the ultimate weapon!"])
       return
-    } else{
+    }
+    if(input.toLowerCase().includes("pxlui")){
+      writeLines(["<br>","PXLUI was created because GameMaker does not have an intuitive UI system, if any at all.",
+      "The framework supports sprites, text, buttons, checkboxes, inventory, and more.",
+      "This library is free and open source, and has Scribble and INPUT dependancies. is the result of years of experience trying to create a UI solution.",
+      "<br>"])
+      return
+    }
     writeLines(["Please specify the project name.", "<br>"])
     return
-    }
   }
 
   switch(input) {
