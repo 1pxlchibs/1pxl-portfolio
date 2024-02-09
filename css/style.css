@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;300;400;600&family=Pixelify+Sans&family=VT323&display=swap');
+
+:root {
+  background-color: #020202;
+  background-size: cover;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 200;
+  --bg: #020202;
+  --border: #FF0040;
+  --text: #ffffff;
+  --prompt-default: #EDF2EF;
+  --prompt-1: #fc3063;
+  --prompt-2: #42E2B8;
+  --prompt-3: #88ffdf;
+}
+
+
+@keyframes blink {
+	0.01% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+	50.01% {
+		opacity: 1;
+	}
+}
+
+@keyframes scanline {
+	0.01% {
+    height: 0;
+  }
+  99.99% {
+    height: 100%
+  }
+	100% {
+		height: 0;
+	}
+}
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+
+  to {
+    width: 100%
+  }
+}
+
+@keyframes rotateAnimation {
+	from {transform: rotateY(0deg);}
+	to {transform: rotateY(360deg);}
+}
+
+
+@keyframes main {
+	from {opacity: 0%; height: 0%;}
+	to {opacity: 100%; height: 100%;}
+}
+
+html,
+body {
+  color: var(--text);
+  
+  /* background-color: var(--bg); */
+  height: 100%;
+  font-size: 16px;
+  display: block;
+  
+}
+
+html {
+  overflow: auto;
+}
+
+body {
+  cursor: none;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+main {
+  animation: main ease-out 1s 1s forwards;
+  height: 0%;
+  opacity: 0%;
+  display: block;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  background-color: #0202022c;
+  border: var(--border) solid 2px;
+  border-radius: 2px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+main::-webkit-scrollbar {
+  display: none;
+}
+
+.circle {
+  pointer-events: none;
+	position: fixed;
+  border: solid 4px var(--prompt-2);
+	width: 30px; 
+	height: 30px; 
+  border-radius: 50%; 
+}
+
+.circle2 {
+  pointer-events: none;
+	position: fixed;
+  background-color: var(--prompt-2);
+  opacity: 0.5;
+	width: 32px; 
+	height: 32px; 
+  border-radius: 50%; 
+}
+
+.blink {
+	opacity: 1;
+	animation: blink 1s linear infinite;
+}
+
+.scanline {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(255,255,255,0.02);
+	animation: scanline linear 8s infinite;
+	pointer-events: none;
+}
+
+p {
+  display: block;
+  line-height: 22px;
+  animation: typing 0.5s steps(30, end);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+div {
+  line-height: 22px;
+}
+
+pre {
+  margin: 0;
+  line-height: 15px !important;
+  color: var(--prompt-2);
+  font-family: monospace;
+}
+
+input {
+  font-family: 'IBM Plex Mono', monospace;
+  background: transparent;
+  backdrop-filter: blur(10px);
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+  resize: none;
+  outline: none;
+  font-size: 16px;
+  color: var(--text);
+  caret-color: transparent;
+  width: 0%;
+}
+
+#exit-button {
+  color: black;
+  line-height: 36px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  justify-content: space-between;
+  display: flex;
+}
+
+#exit-button:hover {
+  color: var(--text);
+}
+
+a {
+  cursor: none;
+  color: var(--prompt-2);
+}
+
+a:hover {
+  cursor: none;
+  background-color: var(--border);
+  color: var(--bg);
+}
+
+#bars {
+  font-family: 'Pixelify Sans', sans-serif;
+  
+  font-size: 20px;
+  position: -webkit-sticky;
+  position: sticky;
+  width: 100%;
+  top: 0;
+  background-color: var(--bg);
+}
+
+#bar-1 {
+  height: 36px;
+  background-color: var(--border);
+  color: var(--bg);
+  line-height: 36px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  justify-content: space-between;
+  display: flex;
+}
+
+#terminal {
+  margin-left: 20px;
+}
+
+#input-line {
+  margin-left: 20px;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.command {
+  text-shadow:
+    0 0 7px #67F1CD,
+    0 0 151px var(--border);
+  color: var(--prompt-3);
+}
+
+.output {
+  font-weight: 400 !important;
+  color: var(--prompt-3);
+}
+
+.keys {
+  color: var(--border);
+  font-weight: 400;
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 10px;
+    padding: 2px;
+    font-weight: 300;
+  }
+
+  input {
+    font-size: 10px;
+  }
+
+  p {
+    line-height: 14px;
+  }
+
+  pre {
+    line-height: 10px !important;
+  }
+
+  main {
+    border-width: 1px;
+  }
+
+  div {
+    line-height: 14px;
+  }
+
+  #terminal {
+    margin-left: 8px;
+  }
+
+  #input-line {
+    margin-left: 8px;
+  }
+}
