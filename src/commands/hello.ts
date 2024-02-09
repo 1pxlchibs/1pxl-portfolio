@@ -34,7 +34,7 @@ export const createHello = () : string[] => {
   const hello : string[] = [];  
   const r = Math.floor(Math.random() * helloObj.message.length);
   
-  helloObj.message[r].forEach((ele, idx) => {
+  helloObj.message[r].forEach((ele) => {
     hello.push(ele);
   });
 

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1" />
+  <script src="https://kit.fontawesome.com/d5effce557.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    function playSound() {
+        var sound = new Audio("/public/assets/type_tone.mp3");
+        sound.play();
+    }
+    function hideTerminal() {
+      const terminal = document.getElementById("main");
+      terminal.style.display = "none";
+    }
+  </script>
+  <title>Enrique Poirier</title>
+  <script type="module" crossorigin src="/assets/index-1jU9LPnD.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-wLphQkbj.css">
+</head>
+
+<body>
+  <div class="scanline"></div>
+  
+  <div id="blur"></div>
+  <main id="main">
+    <div id="bars">
+      <div id="bar-1">terminal.exe <a id="exit-button" class="fa-solid fa-xmark" onclick="hideTerminal()"></a></div>
+    </div>
+    <br>
+    <div id="terminal">
+      <!-- command output will be inserted before #write-lines-->
+      <a id="write-lines"></a>
+    </div>
+    <div id="input-line">
+      <div>
+        <p id="password-input" style="display: none;">Password: <input id="password-field" autocomplete="off" autofocus="on" onkeydown="playSound()" oninput="this.style.width = ((this.value.length)) + 'ch';"
+            type="password" /><span class="blink">█</span></p>
+        <p id="input-hidden">
+          <span id="prompt"><span style="color: var(--prompt-1)">guest</span><span
+              style="color: var(--prompt-default)">@</span><span style="color: var(--prompt-2)">5_os.dev</span><span
+              style="color: var(--prompt-default)">:$ ~</span>
+          </span>
+          <input id="user-input" spellcheck="false" autocapitalize="none" autocomplete="off" autofocus="on" onkeydown="playSound()" oninput="this.style.width = ((this.value.length)) + 'ch';"><span class="blink">█</span>
+        </p>
+      </div>
+      <br>
+    </div>
+    
+  </main>
+  
+</body>
+
+<span id="circle" class="circle"></span>
+<span id="circle2" class="circle2"></span>
+</html>
