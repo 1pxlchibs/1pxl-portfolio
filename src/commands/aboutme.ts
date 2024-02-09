@@ -20,7 +20,7 @@ const createAboutMe = () : string[] => {
   let string = "";
 
   about.push("<br>");
-  about.push("<img src=../res/portrait.png width=200>")
+  about.push("<img src=../public/assets/portrait.png width=200>")
   about.push("Hi I'm Enrique. (aka 1pxlchibs) I am a self-taught dev from Montreal, with 5 years of experience making games.");
   about.push("I began my game development journey at 17 right after highschool.  Since then it turned into my career focus!");
   about.push("I specialize in tool integration, backend systems and framework development. I also love game design, world building and storytelling!");

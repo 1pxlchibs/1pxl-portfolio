@@ -1,7 +1,7 @@
 const createResume = () : string[] => {
     const defaultMsgArr = [
       "<br>",
-      '<a href="../res/Enrique Poirier-GeneratlistProgrammer.pdf" download>Download my resume by clicking here!</a>',
+      '<a href="../public/assets/EnriquePoirier-GeneratlistProgrammer.pdf" download>Download my resume by clicking here!</a>',
       "<br>"
     ]  
     
