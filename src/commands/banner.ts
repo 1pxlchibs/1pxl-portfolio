@@ -21,6 +21,7 @@ const createBanner = () : string[] => {
   banner.push("Welcome to 5 os v1.0.0");
   banner.push("Type <span class='command'>'aboutme'</span> to learn more about me.");
   banner.push("Type <span class='command'>'projects'</span> to learn more about my projects.");
+  banner.push("Type <span class='command'>'resume'</span> to get a download of my resume.");
   banner.push("Type <span class='command'>'help'</span> for a list of all available commands.");
   banner.push("<br>");
   return banner;

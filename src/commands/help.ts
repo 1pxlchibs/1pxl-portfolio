@@ -6,27 +6,31 @@ const helpObj = {
       ],
     [
       "'aboutme'",
-      "Who made this website?",
+      "Who am I?",
     ],
     [
       "'projects'",
       "Maybe there's something interesting."
     ],
     [
-      "'sudo'",
-      "???"
+      "'resume'",
+      "Get a copy of my resume."
     ],
     [
       "'fortune'",
       "A tasty cookie comes with it."
     ],
     [
+      "'spotify'",
+      "Sharing my spotify playlists!"
+    ],
+    [
       "'banner'",
       "Display the banner."
     ],
     [
-      "'spotify'",
-      "Sharing my spotify playlists!"
+      "'sudo'",
+      "???"
     ],
     [
       "'clear'",

@@ -68,6 +68,7 @@ body {
   height: 100%;
   font-size: 16px;
   display: block;
+  
 }
 
 html {
@@ -75,6 +76,7 @@ html {
 }
 
 body {
+  cursor: none;
   padding: 16px;
   box-sizing: border-box;
 }
@@ -98,6 +100,25 @@ main {
 
 main::-webkit-scrollbar {
   display: none;
+}
+
+.circle {
+  pointer-events: none;
+	position: fixed;
+  border: solid 4px var(--prompt-2);
+	width: 30px; 
+	height: 30px; 
+  border-radius: 50%; 
+}
+
+.circle2 {
+  pointer-events: none;
+	position: fixed;
+  background-color: var(--prompt-2);
+  opacity: 0.5;
+	width: 32px; 
+	height: 32px; 
+  border-radius: 50%; 
 }
 
 .blink {
@@ -165,10 +186,12 @@ input {
 }
 
 a {
+  cursor: none;
   color: var(--prompt-2);
 }
 
 a:hover {
+  cursor: none;
   background-color: var(--border);
   color: var(--bg);
 }

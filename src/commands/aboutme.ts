@@ -21,12 +21,12 @@ const createAboutMe = () : string[] => {
 
   about.push("<br>");
   about.push("<img src=../res/portrait.png width=200>")
-  about.push("Hi I'm Enrique. (aka 1pxlchibs) I am a self-taught dev from Montreal, with 6 years of experience making games.");
-  about.push("I began my game development journey at 17 right after highschool. Little did I know it turend into my career focus!");
+  about.push("Hi I'm Enrique. (aka 1pxlchibs) I am a self-taught dev from Montreal, with 5 years of experience making games.");
+  about.push("I began my game development journey at 17 right after highschool.  Since then it turned into my career focus!");
   about.push("I specialize in tool integration, backend systems and framework development. I also love game design, world building and storytelling!");
   about.push("I strive to create innovation in unique worlds and tell impactful stories through genre-bending media.");
   about.push("<br>");
-  about.push("I released my first commercial solo project in the summer of 2022 under the publishing of Freedom Games. I am now currently working on a new ambitious project.");
+  about.push("I've released one commercial solo dev project in the summer of 2022 under the publishing of Freedom Games. I am now currently building a team and working on a new ambitious project.");
 
   string += SPACE.repeat(2);
   string += email;

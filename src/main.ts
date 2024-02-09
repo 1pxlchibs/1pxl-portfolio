@@ -6,6 +6,7 @@ import { DEFAULT } from "./commands/default";
 import { PROJECTS } from "./commands/projects";
 import { createHello } from './commands/hello';
 import { createFortune } from './commands/fortune';
+import { RESUME } from './commands/resume';
 
 //mutWriteLines gets deleted and reassigned
 let mutWriteLines = document.getElementById("write-lines");
@@ -189,7 +190,8 @@ function commandHandler(input : string) {
 
   if(input.startsWith("more") && !bareMode) {
     if(input.toLowerCase().includes("neonblight") || input.toLowerCase().includes("nb") || input.toLowerCase().includes("neon blight")){
-      writeLines(['<iframe width="560" height="315" src="https://www.youtube.com/embed/DV5VYDS-g1M?si=p8ZdhfhLfuuVPDc6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+      writeLines(["<br>",
+      '<iframe width="560" height="315" src="https://www.youtube.com/embed/DV5VYDS-g1M?si=p8ZdhfhLfuuVPDc6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
       "<br>",
       "Description:<br>Neon Blight is a top down bullet hell where you run a shop selling guns and relics you find in the outer border. <br>Fight through bosses and get access to the ultimate weapon!"])
       return
@@ -207,7 +209,8 @@ function commandHandler(input : string) {
 
   if(input.startsWith("spotify") && !bareMode) {
     writeLines(["<br>","My spotify playlist to get in the zone!",
-    "<iframe style='border-radius:12px' src='https://open.spotify.com/embed/playlist/7B1IDMuwobKOAIPqd9bgTp?utm_source=generator' width='40%' height='352' frameBorder='0' allowfullscreen='' allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture' loading='lazy'></iframe>"])
+    "<iframe style='border-radius:12px' src='https://open.spotify.com/embed/playlist/7B1IDMuwobKOAIPqd9bgTp?utm_source=generator' width='40%' height='352' frameBorder='0' allowfullscreen='' allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture' loading='lazy'></iframe>",
+    "<br>"])
     return
   }
 
@@ -268,6 +271,10 @@ function commandHandler(input : string) {
       }
       writeLines(PROJECTS);
       break;
+    case "resume":
+      writeLines(RESUME);
+    break;
+
     case 'linkedin':
       //add stuff here
       break;
@@ -435,6 +442,24 @@ const initEventListeners = () => {
 
   $(document).ready(function(){
     $('scanline').css({'animation-duration' : (Math.random()* 8) + 's'})
+
+    var mouseX = 0, mouseY = 0;
+    var xp = 0, yp = 0;
+    
+    $(document).mousemove(function(e){
+      mouseX = e.pageX - 10;
+      mouseY = e.pageY - 10; 
+    });
+      
+    setInterval(function(){
+      xp += ((mouseX - xp)/12);
+      yp += ((mouseY - yp)/12);
+      $("#circle").css({left: xp +'px', top: yp +'px'});
+      xp += ((mouseX - xp)/9);
+      yp += ((mouseY - yp)/9);
+      $("#circle2").css({left: xp + 3 +'px', top: yp + 3 +'px'});
+    }, 20);
+
   });
 
 }
