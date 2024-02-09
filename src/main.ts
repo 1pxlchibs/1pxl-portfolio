@@ -30,11 +30,11 @@ const COMMANDS = ["help", "about", "projects", "whoami", "banner", "clear"];
 const HISTORY : string[] = [];
 const SUDO_PASSWORD = "050823";
 const backgroundImages: string[] = [
-  'url(public/assets/background_1.png)',
-  'url(public/assets/background_2.png)',
-  'url(public/assets/background_3.png)',
-  'url(public/assets/background_4_1.png)',
-  'url(public/assets/background_5.png)',
+  'url(./assets/background_1.png)',
+  'url(./assets/background_2.png)',
+  'url(./assets/background_3.png)',
+  'url(./assets/background_4_1.png)',
+  'url(./assets/background_5.png)',
   // Add more image URLs as needed
 ];
 
@@ -341,7 +341,7 @@ function writeLines(message : string[]) {
 }
 
 function displayText(item : string, idx : number) {
-  let audio = new Audio("/public/assets/type_tone.mp3");
+  let audio = new Audio("./assets/type_tone.mp3");
   setTimeout(() => {
     audio.play();
     if(!mutWriteLines) return
