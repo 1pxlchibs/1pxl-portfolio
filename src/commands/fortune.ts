@@ -52,7 +52,7 @@ export const createFortune = () : string[] => {
   const fortune : string[] = [];  
   const r = Math.floor(Math.random() * fortuneObj.message.length);
 
-  fortuneObj.message[r].forEach((ele, idx) => {
+  fortuneObj.message[r].forEach((ele) => {
     fortune.push(ele);
   });
 
