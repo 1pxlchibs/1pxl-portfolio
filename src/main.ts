@@ -1,11 +1,11 @@
-import { HELP } from "./public/commands/help";
-import { BANNER } from "./public/commands/banner";
-import { ABOUTME } from "./public/commands/aboutme"
-import { DEFAULT } from "./public/commands/default";
-import { PROJECTS } from "./public/commands/projects";
-import { createHello } from './public/commands/hello';
-import { createFortune } from './public/commands/fortune';
-import { RESUME } from './public/commands/resume';
+import { HELP } from "./commands/help";
+import { BANNER } from "./commands/banner";
+import { ABOUTME } from "./commands/aboutme"
+import { DEFAULT } from "./commands/default";
+import { PROJECTS } from "./commands/projects";
+import { createHello } from './commands/hello';
+import { createFortune } from './commands/fortune';
+import { RESUME } from './commands/resume';
 
 //mutWriteLines gets deleted and reassigned
 let mutWriteLines = document.getElementById("write-lines");
