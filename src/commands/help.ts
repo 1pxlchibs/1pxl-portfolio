@@ -47,7 +47,10 @@ const createHelp = () : string[] => {
     const SPACE = "&nbsp;";
     let string = "";
     string += SPACE.repeat(2);
-    string += "<span class='command'>";
+    string += "<span class='command'";
+    string += "data-command=";
+    string += ele[0];
+    string += ">"
     string += ele[0];
     string += "</span>";
     string += SPACE.repeat(17 - ele[0].length);

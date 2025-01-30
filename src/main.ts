@@ -1,11 +1,11 @@
-import { HELP } from "./commands/help";
-import { BANNER } from "./commands/banner";
 import { ABOUTME } from "./commands/aboutme"
+import { BANNER } from "./commands/banner";
 import { DEFAULT } from "./commands/default";
+import { HELP } from "./commands/help";
 import { PROJECTS } from "./commands/projects";
-import { createHello } from './commands/hello';
-import { createFortune } from './commands/fortune';
 import { RESUME } from './commands/resume';
+import { createFortune } from './commands/fortune';
+import { createHello } from './commands/hello';
 
 //mutWriteLines gets deleted and reassigned
 let mutWriteLines = document.getElementById("write-lines");
@@ -37,6 +37,129 @@ const backgroundImages: string[] = [
   'url(./assets/background_5.png)',
   // Add more image URLs as needed
 ];
+
+function executeCommand(command: string) {
+  switch (command) {
+    case 'clear':
+      setTimeout(() => {
+        if(!TERMINAL || !WRITELINESCOPY) return
+        TERMINAL.innerHTML = "";
+        TERMINAL.appendChild(WRITELINESCOPY);
+        mutWriteLines = WRITELINESCOPY;
+      })
+      break;
+    case 'banner':
+      if(bareMode) {
+        writeLines(["WebShell v1.0.0", "<br>"])
+        break;
+      }
+      writeLines(BANNER);
+      break;
+    case 'help':
+      if(bareMode) {
+        writeLines(["maybe restarting your browser will fix this.", "<br>"])
+        break;
+      }
+      writeLines(HELP);
+      break;
+    case 'hello':      
+      if(bareMode) {
+        writeLines(["guest", "<br>"])
+        break;
+      }
+      writeLines(createHello());
+      break;
+    case 'fortune':      
+      if(bareMode) {
+        writeLines(["guest", "<br>"])
+        break;
+      }
+      writeLines(["*You break open the cookie*"])
+      setTimeout(() => {
+        writeLines(["The fortune cookie reads:","<br>"]);
+        }, 600)
+      setTimeout(() => {
+      writeLines(createFortune());
+      }, 1000)
+      break;
+    case 'aboutme':
+      if(bareMode) {
+        writeLines(["Nothing to see here.", "<br>"])
+        break;
+      }
+      writeLines(ABOUTME);
+      break;
+    case 'projects':
+      if(bareMode) {
+        writeLines(["I don't want you to break the other projects.", "<br>"])
+        break;
+      }
+      writeLines(PROJECTS);
+      break;
+    case "resume":
+      writeLines(RESUME);
+    break;
+
+    case 'linkedin':
+      //add stuff here
+      break;
+    case 'github':
+      //add stuff here
+      break;
+    case 'email':
+      //add stuff here
+      break;
+    case 'rm -rf':
+      if (bareMode) {
+        writeLines(["don't try again.", "<br>"])
+        break;
+      }
+
+      if (isSudo) {
+        writeLines(["Usage: <span class='command'>'rm -rf &lt;dir&gt;'</span>", "<br>"]);
+      } else {
+        writeLines(["Permission not granted.", "<br>"])
+      }
+        break;
+    case 'sudo':
+      if(bareMode) {
+        writeLines(["no.", "<br>"])
+        break;
+      }
+      if(!PASSWORD) return
+      isPasswordInput = true;
+      USERINPUT.disabled = true;
+
+      if(INPUT_HIDDEN) INPUT_HIDDEN.style.display = "none";
+      PASSWORD.style.display = "block";
+      setTimeout(() => {
+        PASSWORD_INPUT.focus();
+      }, 100);
+
+      break;
+    case 'ls':
+      if(bareMode) {
+        writeLines(["", "<br>"])
+        break;
+      }
+
+      if (isSudo) {
+        writeLines(["src", "<br>"]);
+      } else {
+        writeLines(["Permission not granted.", "<br>"]);
+      }
+      break;
+    default:
+      if(bareMode) {
+        writeLines(["type 'help'", "<br>"])
+        break;
+      }
+
+      writeLines(DEFAULT);
+      break;
+  }
+}
+
 
 const scrollToBottom = () => {
   const MAIN = document.getElementById("main");
@@ -212,126 +335,7 @@ function commandHandler(input : string) {
     "<br>"])
     return
   }
-
-  switch(input) {
-    case 'clear':
-      setTimeout(() => {
-        if(!TERMINAL || !WRITELINESCOPY) return
-        TERMINAL.innerHTML = "";
-        TERMINAL.appendChild(WRITELINESCOPY);
-        mutWriteLines = WRITELINESCOPY;
-      })
-      break;
-    case 'banner':
-      if(bareMode) {
-        writeLines(["WebShell v1.0.0", "<br>"])
-        break;
-      }
-      writeLines(BANNER);
-      break;
-    case 'help':
-      if(bareMode) {
-        writeLines(["maybe restarting your browser will fix this.", "<br>"])
-        break;
-      }
-      writeLines(HELP);
-      break;
-    case 'hello':      
-      if(bareMode) {
-        writeLines(["guest", "<br>"])
-        break;
-      }
-      writeLines(createHello());
-      break;
-    case 'fortune':      
-      if(bareMode) {
-        writeLines(["guest", "<br>"])
-        break;
-      }
-      writeLines(["*You break open the cookie*"])
-      setTimeout(() => {
-        writeLines(["The fortune cookie reads:","<br>"]);
-        }, 600)
-      setTimeout(() => {
-      writeLines(createFortune());
-      }, 1000)
-      break;
-    case 'aboutme':
-      if(bareMode) {
-        writeLines(["Nothing to see here.", "<br>"])
-        break;
-      }
-      writeLines(ABOUTME);
-      break;
-    case 'projects':
-      if(bareMode) {
-        writeLines(["I don't want you to break the other projects.", "<br>"])
-        break;
-      }
-      writeLines(PROJECTS);
-      break;
-    case "resume":
-      writeLines(RESUME);
-    break;
-
-    case 'linkedin':
-      //add stuff here
-      break;
-    case 'github':
-      //add stuff here
-      break;
-    case 'email':
-      //add stuff here
-      break;
-    case 'rm -rf':
-      if (bareMode) {
-        writeLines(["don't try again.", "<br>"])
-        break;
-      }
-
-      if (isSudo) {
-        writeLines(["Usage: <span class='command'>'rm -rf &lt;dir&gt;'</span>", "<br>"]);
-      } else {
-        writeLines(["Permission not granted.", "<br>"])
-      }
-        break;
-    case 'sudo':
-      if(bareMode) {
-        writeLines(["no.", "<br>"])
-        break;
-      }
-      if(!PASSWORD) return
-      isPasswordInput = true;
-      USERINPUT.disabled = true;
-
-      if(INPUT_HIDDEN) INPUT_HIDDEN.style.display = "none";
-      PASSWORD.style.display = "block";
-      setTimeout(() => {
-        PASSWORD_INPUT.focus();
-      }, 100);
-
-      break;
-    case 'ls':
-      if(bareMode) {
-        writeLines(["", "<br>"])
-        break;
-      }
-
-      if (isSudo) {
-        writeLines(["src", "<br>"]);
-      } else {
-        writeLines(["Permission not granted.", "<br>"]);
-      }
-      break;
-    default:
-      if(bareMode) {
-        writeLines(["type 'help'", "<br>"])
-        break;
-      }
-
-      writeLines(DEFAULT);
-      break;
-  }  
+  executeCommand(input)
 }
 
 function writeLines(message : string[]) {
@@ -340,17 +344,32 @@ function writeLines(message : string[]) {
   });
 }
 
-function displayText(item : string, idx : number) {
+function displayText(item: string, idx: number) {
   let audio = new Audio("./assets/type_tone.mp3");
+
   setTimeout(() => {
     audio.play();
-    if(!mutWriteLines) return
+    if (!mutWriteLines) return;
+
     const p = document.createElement("p");
     p.innerHTML = item;
     mutWriteLines.parentNode!.insertBefore(p, mutWriteLines);
+    
+    // Attach event listeners to command spans after inserting the new paragraph
+    p.querySelectorAll(".command").forEach((element) => {
+      element.addEventListener("click", (event) => {
+        const target = event.target as HTMLElement;
+        const command = target.getAttribute("data-command");
+        if (command) {
+          executeCommand(command);
+        }
+      });
+    });
+
     scrollToBottom();
   }, 40 * idx);
 }
+
 
 function revertPasswordChanges() {
     if (!INPUT_HIDDEN || !PASSWORD) return
