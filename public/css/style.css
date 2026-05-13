@@ -12,6 +12,7 @@
   --prompt-1: #fc3063;
   --prompt-2: #42E2B8;
   --prompt-3: #a6ffe7;
+  --prompt-4: #582230;
 }
 
 /* #region Animations */
@@ -78,6 +79,15 @@ body {
   padding: 16px;
   box-sizing: border-box;
 }
+
+h1 {
+  font-size: xx-large;
+}
+
+h2 {
+  font-size: x-large;
+}
+
 
 p {
   display: block;
@@ -296,6 +306,46 @@ footer {
 
 #terminal {
   margin-left: 20px;
+}
+/* #endregion */
+
+/* #region Portfolio */
+.portfolio {
+  gap: 1vh;
+  display: inline-grid;
+  grid-template-columns: 90%;
+  grid-template-rows: 42vh 39vh;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.portfolio-innerbox {
+  height: 100%;
+  border: var(--prompt-4) dashed 2px;
+}
+
+.portfolio-about {
+  height: auto;
+  padding: 3vh;
+  text-align: left;
+  overflow: auto;
+}
+
+.portfolio-desc {
+  padding-top: 1vh;
+  text-wrap: wrap;
+}
+
+.portfolio-socials {
+  text-decoration: none;
+  padding: 2vh;
+  scale: 1.4;
+}
+
+#portfolio-window {
+  width: 30vw;
 }
 /* #endregion */
 
