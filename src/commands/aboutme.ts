@@ -1,4 +1,4 @@
-import command from '../../config.json' assert {type: 'json'};
+import command from '../../config.json' with {type: 'json'};
 
 const createAboutMe = () : string[] => {
   const about : string[] = [];
@@ -8,25 +8,34 @@ const createAboutMe = () : string[] => {
   const EMAIL = "Email";
   const GITHUB = "Github";
   const LINKEDIN = "Linkedin";
-  const XTWITTER = "X";
   const BLUESKY = "Bluesky";
   
   const email = `<i class='fa-solid fa-envelope'></i> ${EMAIL}`;   
   const github = `<i class='fa-brands fa-github'></i> ${GITHUB}`;
   const bluesky = `<i class="fa-solid fa-hashtag"></i> ${BLUESKY}`;
   const linkedin = `<i class='fa-brands fa-linkedin'></i> ${LINKEDIN}`;
-  const xtwitter = `<i class="fa-brands fa-x-twitter"></i> ${XTWITTER}`;
 
   let string = "";
 
   about.push("<br>");
+  command.ascii.forEach((ele) => {
+    let bannerString = "";
+    // Convert spaces to `&nbsp;` for ASCII art
+    for (let i = 0; i < ele.length; i++) {
+      bannerString += ele[i] === " " ? "&nbsp;" : ele[i];
+    }
+    
+    about.push(`<pre>${bannerString}</pre>`);
+  });
+
+
+  about.push("<br>");
   about.push("<img src=./assets/portrait.png width=200>")
-  about.push("Hi I'm Enrique. (aka 1pxlchibs) I am a self-taught dev from Montreal, with 5 years of experience making games.");
-  about.push("I began my game development journey at 17 right after highschool.  Since then it turned into my career focus!");
+  about.push("Hi I'm Enrique. (aka 1pxlchibs) I am a developer from Montreal, with 9 years of coding experience.");
+  about.push("I started making games when I was a teenager.  Since then it turned into my career focus!");
   about.push("I specialize in tool integration, backend systems and framework development. I also love game design, world building and storytelling!");
   about.push("I strive to create innovation in unique worlds and tell impactful stories through genre-bending media.");
   about.push("<br>");
-  about.push("I've released one commercial solo dev project in the summer of 2022 under the publishing of Freedom Games. I am now currently building a team and working on a new ambitious project.");
 
   string += SPACE.repeat(2);
   string += email;
@@ -55,13 +64,12 @@ const createAboutMe = () : string[] => {
   string += `<a target='_blank' href='https://www.linkedin.com/in/${command.social.linkedin}'>linkedin/${command.social.linkedin}</a>`;
   about.push(string);
 
-  string = '';
-  string += SPACE.repeat(2);
-  string += xtwitter;
-  string += SPACE.repeat(17 - XTWITTER.length);  
-  string += `<a target='_blank' href='https://twitter.com/${command.social.xtwitter}'>Twitter/${command.social.xtwitter}</a>`;
-  about.push(string);
+  about.push("<br>");
 
+  about.push("<br>");
+  about.push("Type or press <a class='command' data-command='projects'>'projects'</a> to learn more about my projects.");
+  about.push("Type or press <a class='command' data-command='resume'>'resume'</a> to get a download of my resume.");
+  about.push("Type or press <a class='command' data-command='help'>'help'</a> for a list of all available commands.");
   about.push("<br>");
   return about
 }

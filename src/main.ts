@@ -19,7 +19,6 @@ let bareMode = false;
 
 //WRITELINESCOPY is used to during the "clear" command
 const WRITELINESCOPY = mutWriteLines;
-const ROOT = document.documentElement;
 const TERMINAL = document.getElementById("terminal");
 const USERINPUT = document.getElementById("user-input") as HTMLInputElement;
 const INPUT_HIDDEN = document.getElementById("input-hidden");
@@ -29,15 +28,8 @@ const PROMPT = document.getElementById("prompt");
 const COMMANDS = ["help", "about", "projects", "whoami", "banner", "clear"];
 const HISTORY : string[] = [];
 const SUDO_PASSWORD = "050823";
-const backgroundImages: string[] = [
-  'url(./assets/background_1.png)',
-  'url(./assets/background_2.png)',
-  'url(./assets/background_3.png)',
-  'url(./assets/background_4_1.png)',
-  'url(./assets/background_5.png)',
-  // Add more image URLs as needed
-];
 
+// #region Command Handlers
 function executeCommand(command: string) {
   switch (command) {
     case 'clear':
@@ -159,7 +151,6 @@ function executeCommand(command: string) {
       break;
   }
 }
-
 
 const scrollToBottom = () => {
   const MAIN = document.getElementById("main");
@@ -337,7 +328,9 @@ function commandHandler(input : string) {
   }
   executeCommand(input)
 }
+// #endregion
 
+// #region Command Output
 function writeLines(message : string[]) {
   message.forEach((item, idx) => {
     displayText(item, idx);
@@ -369,8 +362,9 @@ function displayText(item: string, idx: number) {
     scrollToBottom();
   }, 40 * idx);
 }
+// #endregion
 
-
+// #region Easter Egg Handlers
 function revertPasswordChanges() {
     if (!INPUT_HIDDEN || !PASSWORD) return
     PASSWORD_INPUT.value = "";
@@ -432,54 +426,156 @@ function easterEggStyles() {
   USERINPUT.style.fontSize = "20px";
 
 }
+// #endregion
 
-function getRandomImage(): string {
-  const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-  return backgroundImages[randomIndex];
+// #region Terminal
+function showTerminal(window: string, func: Function = () => {}) {
+  const main = document.querySelector(window) as HTMLElement;
+  main.style.animation = "none";   // reset animation
+  void main.offsetWidth;           // force reflow (important)
+  main.style.animation = "portfolio-terminal ease-out 1s forwards";
+  setTimeout(func,300)
 }
 
+function hideTerminal(window: string, func: Function = () => {}) {
+  const main = document.querySelector(window) as HTMLElement;
+  
+  main.style.animation = "none";   // reset animation
+  void main.offsetWidth;           // force reflow (important)
+  main.style.animation = "portfolio-terminal ease-out 1s reverse forwards";
+  main.style.animationDirection = "reverse";
+
+  setTimeout(func, 900);
+}
+// #endregion
+
+// Website initialization & Event Listeners
 const initEventListeners = () => {
-  window.addEventListener('load', () => {
-    ROOT.style.setProperty('background-image',getRandomImage());
-    setTimeout(() => {
-      writeLines(BANNER);
+  const portfolioButton = document.querySelector("#portfolioBtn") as HTMLButtonElement;
+  const portfolioExitButton = document.getElementById('exit-button') as HTMLButtonElement;
+
+  const blogButton = document.querySelector("#blogBtn") as HTMLButtonElement;
+  const blogExitButton = document.getElementById('blog-exit-button') as HTMLButtonElement;
+  
+  // Portfolio Button
+  portfolioButton.addEventListener("click", () => {
+    showTerminal("#main",() => {
+      writeLines(ABOUTME);
     
       USERINPUT.addEventListener('keydown', userInputHandler);
       PASSWORD_INPUT.addEventListener('keydown', userInputHandler);
-  
-      
-    },2000)
-    
+    });
+  });
+  portfolioExitButton.addEventListener('click', () => {
+    hideTerminal("#main",() => {
+      executeCommand("clear");
+    });
+  });
+
+  // Blog Button
+  blogButton.addEventListener("click", () => {
+    showTerminal("#blog-window");
+  });
+  blogExitButton.addEventListener('click', () => {
+    hideTerminal("#blog-window");
   });
   
+  // Document Loaded Logic
+  document.addEventListener("DOMContentLoaded", () => {
+    //ROOT.style.setProperty('background-image',getRandomImage());
+    const scanline = document.querySelector("scanline") as HTMLElement;
+
+    if (scanline) {
+      scanline.style.animationDuration = (Math.random() * 8) + "s";
+    }
+
+    // Draggable Portfolio Terminal Logic
+    const portfolioTerminal = document.querySelector('#main') as HTMLElement;
+    const portfolioTitleBar = document.getElementById('portfolio-bars') as HTMLElement;
+
+    const blogTerminal = document.querySelector('#blog-window') as HTMLElement;
+    const blogTitleBar = document.getElementById('blog-bars') as HTMLElement;
+    
+    // Center the terminal on load
+    const portfolioWidth = portfolioTerminal.offsetWidth;
+    const blogWidth = blogTerminal.offsetWidth;
+    const portfolioCenterX = (window.innerWidth - portfolioWidth) / 2;
+    const blogCenterX = (window.innerWidth - blogWidth) / 2;
+
+    portfolioTerminal.style.left = portfolioCenterX + 'px';
+    blogTerminal.style.left = blogCenterX + 'px';
+    
+    let isDraggingPortfolio = false;
+    let isDraggingBlog = false;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+
+    portfolioTitleBar.addEventListener('mousedown', (e) => {
+      isDraggingPortfolio = true;
+      const rect = portfolioTerminal.getBoundingClientRect();
+      dragOffsetX = e.clientX - rect.left;
+      dragOffsetY = e.clientY - rect.top;
+      portfolioTitleBar.style.cursor = 'grabbing';
+
+      portfolioTerminal.style.zIndex = '100';
+      blogTerminal.style.zIndex = '99';
+    });
+
+    blogTitleBar.addEventListener('mousedown', (e) => {
+      isDraggingBlog = true;
+      const rect = blogTerminal.getBoundingClientRect();
+      dragOffsetX = e.clientX - rect.left;
+      dragOffsetY = e.clientY - rect.top;
+      blogTitleBar.style.cursor = 'grabbing';
+
+      blogTerminal.style.zIndex = '100';
+      portfolioTerminal.style.zIndex = '99';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDraggingPortfolio) {
+        let x = e.clientX - dragOffsetX;
+        let y = e.clientY - dragOffsetY;
+
+        x = Math.max(0, Math.min(x, window.innerWidth - portfolioTerminal.offsetWidth));
+        y = Math.max(0, Math.min(y, window.innerHeight - portfolioTerminal.offsetHeight));
+
+        portfolioTerminal.style.left = x + 'px';
+        portfolioTerminal.style.top = y + 'px';
+
+        dragOffsetX = e.clientX - x;
+        dragOffsetY = e.clientY - y;
+      }
+      if (isDraggingBlog) {
+        let x = e.clientX - dragOffsetX;
+        let y = e.clientY - dragOffsetY;
+
+        x = Math.max(0, Math.min(x, window.innerWidth - blogTerminal.offsetWidth));
+        y = Math.max(0, Math.min(y, window.innerHeight - blogTerminal.offsetHeight));
+
+        blogTerminal.style.left = x + 'px';
+        blogTerminal.style.top = y + 'px';
+
+        dragOffsetX = e.clientX - x;
+        dragOffsetY = e.clientY - y;
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDraggingPortfolio = false;
+      isDraggingBlog = false;
+      portfolioTitleBar.style.cursor = 'grab';
+      blogTitleBar.style.cursor = 'grab';
+    });
+  });
+
+  // Focus on the input field
   window.addEventListener('click', () => {
     USERINPUT.focus();
   });
 
   console.log("%cPassword: 050823", "color: red; font-size: 20px;");
-
-  $(document).ready(function(){
-    $('scanline').css({'animation-duration' : (Math.random()* 8) + 's'})
-
-    var mouseX = 0, mouseY = 0;
-    var xp = 0, yp = 0;
-    
-    $(document).mousemove(function(e){
-      mouseX = e.pageX - 10;
-      mouseY = e.pageY - 10; 
-    });
-      
-    setInterval(function(){
-      xp += ((mouseX - xp)/12);
-      yp += ((mouseY - yp)/12);
-      $("#circle").css({left: xp +'px', top: yp +'px'});
-      xp += ((mouseX - xp)/9);
-      yp += ((mouseY - yp)/9);
-      $("#circle2").css({left: xp + 3 +'px', top: yp + 3 +'px'});
-    }, 20);
-
-  });
-
 }
 
+// Run the website initialization
 initEventListeners();

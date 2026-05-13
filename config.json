@@ -26,9 +26,21 @@
       "https://github.com/1pxlchibs/PXLUI"
     ],
     [
-      "████████",
-      "Unannounced game project set in the Neon Blight universe.",
-      ""
+      "Dice Game",
+      "Unannounced dice game.",
+      "https://1pxlchibs.github.io/1pxl-portfolio/"
+    ]
+  ],
+  "client_projects": [
+    [
+      "Slumbox - Technical Game Artist",
+      "An ambitious cyberpunk lifesim RPG",
+      "https://www.worldviper.com"
+    ],
+    [
+      "Protostar - UI Artist",
+      "A galactic pixel art metroidvania.",
+      "https://x.com/xProtoStar"
     ]
   ]
 }

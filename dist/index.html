@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8" />
+
+
   <link rel="stylesheet" href="./css/css-reset.css">
   <link rel="stylesheet" href="./css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1" />
@@ -13,22 +15,25 @@
         var sound = new Audio("./assets/type_tone.mp3");
         sound.play();
     }
-    function hideTerminal() {
-      const terminal = document.getElementById("main");
-      terminal.style.display = "none";
-    }
   </script>
+
   <title>Enrique Poirier</title>
-  <script type="module" crossorigin src="/1pxl-portfolio/assets/index-8UsBUENd.js"></script>
+  <script type="module" crossorigin src="/1pxl-portfolio/assets/index-jaCEbW8e.js"></script>
 </head>
 
 <body>
-  <div class="scanline"></div>
   
+  <div class="desktop-buttons">
+    <a id="portfolioBtn" class="fa-solid fa-terminal desktop-button"><div class="desktop-button-text">Portfolio</div></a>
+    <a id="blogBtn" class="fa-solid fa-folder-open desktop-button"><div class="desktop-button-text">Blog</div></a>
+  </div>
+  <div id="stage"></div>
+  <div class="scanline"></div>
   <div id="blur"></div>
-  <main id="main">
-    <div id="bars">
-      <div id="bar-1">terminal.exe <a id="exit-button" class="fa-solid fa-xmark" onclick="hideTerminal()"></a></div>
+  <!-- Portfolio Terminal -->
+  <article id="main" class="portfolio-terminal">
+    <div id="portfolio-bars">
+      <div id="bar-1">portfolio.exe<a id="exit-button" class="fa-solid fa-xmark"></a></div>
     </div>
     <br>
     <div id="terminal">
@@ -49,10 +54,22 @@
       </div>
       <br>
     </div>
-    
-  </main>
+  </article>
   
+  <!-- Blog Window -->
+  <article id="blog-window" class="portfolio-terminal">
+    <div id="blog-bars">
+      <div id="bar-1">blog.exe<a id="blog-exit-button" class="fa-solid fa-xmark"></a></div>
+    </div>
+    <br>
+    <div id="terminal">
+      <p>Blogs coming soon...</p>
+      <a id="write-lines"></a>
+    </div>
+  </article>
+
+  <footer>
+    <p>© 2026 Enrique Poirier. All rights reserved.</p>
+  </footer>
 </body>
-<span id="circle" class="circle"></span>
-<span id="circle2" class="circle2"></span>
 </html>
