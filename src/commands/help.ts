@@ -5,10 +5,6 @@ const helpObj = {
       "Greetings.",
       ],
     [
-      "'aboutme'",
-      "Who am I?",
-    ],
-    [
       "'projects'",
       "Maybe there's something interesting."
     ],

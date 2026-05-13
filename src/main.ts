@@ -20,7 +20,7 @@ let bareMode = false;
 
 //WRITELINESCOPY is used to during the "clear" command
 const WRITELINESCOPY = mutWriteLines;
-const PORTFOLIO_WINDOW = document.getElementById("portfolio-window");
+const ABOUTME_WINDOW = document.getElementById("aboutme-window");
 const TERMINAL_WINDOW = document.getElementById("terminal-window");
 const BLOG_WINDOW = document.getElementById("blog-window");
 const TERMINAL = document.getElementById("terminal");
@@ -77,13 +77,6 @@ function executeCommand(command: string) {
       setTimeout(() => {
       writeLines(createFortune());
       }, 1000)
-      break;
-    case 'aboutme':
-      if(bareMode) {
-        writeLines(["Nothing to see here.", "<br>"])
-        break;
-      }
-      writeLines(ABOUTME);
       break;
     case 'projects':
       if(bareMode) {
@@ -501,8 +494,8 @@ getForecast();
 const initEventListeners = () => {
   setTime();
   
-  const portfolioButton = document.querySelector("#portfolioBtn") as HTMLButtonElement;
-  const portfolioExitButton = document.getElementById('portfolio-exit-button') as HTMLButtonElement;
+  const aboutmeButton = document.querySelector("#aboutmeBtn") as HTMLButtonElement;
+  const aboutmeExitButton = document.getElementById('aboutme-exit-button') as HTMLButtonElement;
 
   const terminalButton = document.querySelector("#terminalBtn") as HTMLButtonElement;
   const terminalExitButton = document.getElementById('exit-button') as HTMLButtonElement;
@@ -510,14 +503,14 @@ const initEventListeners = () => {
   const blogButton = document.querySelector("#blogBtn") as HTMLButtonElement;
   const blogExitButton = document.getElementById('blog-exit-button') as HTMLButtonElement;
   
-  // Portfolio Button
-  portfolioButton.addEventListener("click", () => {
-    if (!PORTFOLIO_WINDOW) return;
-    showTerminal(PORTFOLIO_WINDOW);
+  // Aboutme Button
+  aboutmeButton.addEventListener("click", () => {
+    if (!ABOUTME_WINDOW) return;
+    showTerminal(ABOUTME_WINDOW);
   });
-  portfolioExitButton.addEventListener('click', () => {
-    if (!PORTFOLIO_WINDOW) return;
-    hideTerminal(PORTFOLIO_WINDOW);
+  aboutmeExitButton.addEventListener('click', () => {
+    if (!ABOUTME_WINDOW) return;
+    hideTerminal(ABOUTME_WINDOW);
   });
 
   // TerminalButton
@@ -556,40 +549,40 @@ const initEventListeners = () => {
       scanline.style.animationDuration = (Math.random() * 8) + "s";
     }
 
-    if (!PORTFOLIO_WINDOW || !TERMINAL_WINDOW || !BLOG_WINDOW) return;
+    if (!ABOUTME_WINDOW || !TERMINAL_WINDOW || !BLOG_WINDOW) return;
     // Draggable Logic
-    const portfolioTitleBar = document.getElementById('portfolio-bars') as HTMLElement;
+    const aboutmeTitleBar = document.getElementById('aboutme-bars') as HTMLElement;
     const terminalTitleBar = document.getElementById('terminal-bars') as HTMLElement;
     const blogTitleBar = document.getElementById('blog-bars') as HTMLElement;
     
     
     // Center the terminal on load
-    const portfolioWidth = PORTFOLIO_WINDOW.offsetWidth;
+    const aboutmeWidth = ABOUTME_WINDOW.offsetWidth;
     const terminalWidth = TERMINAL_WINDOW.offsetWidth;
     const blogWidth = BLOG_WINDOW.offsetWidth;
 
-    const portfolioCenterX = (window.innerWidth - portfolioWidth) / 2;
+    const aboutmeCenterX = (window.innerWidth - aboutmeWidth) / 2;
     const terminalCenterX = (window.innerWidth - terminalWidth) / 2;
     const blogCenterX = (window.innerWidth - blogWidth) / 2;
 
-    PORTFOLIO_WINDOW.style.left = portfolioCenterX + 'px';
+    ABOUTME_WINDOW.style.left = aboutmeCenterX + 'px';
     TERMINAL_WINDOW.style.left = terminalCenterX + 'px';
     BLOG_WINDOW.style.left = blogCenterX + 'px';
     
-    let isDraggingPortfolio = false;
+    let isDraggingAboutme = false;
     let isDraggingTerminal = false;
     let isDraggingBlog = false;
     let dragOffsetX = 0;
     let dragOffsetY = 0;
 
-    portfolioTitleBar.addEventListener('mousedown', (e) => {  
-      isDraggingPortfolio = true;
-      const rect = PORTFOLIO_WINDOW.getBoundingClientRect();
+    aboutmeTitleBar.addEventListener('mousedown', (e) => {  
+      isDraggingAboutme = true;
+      const rect = ABOUTME_WINDOW.getBoundingClientRect();
       dragOffsetX = e.clientX - rect.left;
       dragOffsetY = e.clientY - rect.top;
-      portfolioTitleBar.style.cursor = 'grabbing';
+      aboutmeTitleBar.style.cursor = 'grabbing';
 
-      PORTFOLIO_WINDOW.style.zIndex = '100';
+      ABOUTME_WINDOW.style.zIndex = '100';
       TERMINAL_WINDOW.style.zIndex = '99';
       BLOG_WINDOW.style.zIndex = '99';
     });
@@ -602,7 +595,7 @@ const initEventListeners = () => {
       terminalTitleBar.style.cursor = 'grabbing';
 
       TERMINAL_WINDOW.style.zIndex = '100';
-      PORTFOLIO_WINDOW.style.zIndex = '99';
+      ABOUTME_WINDOW.style.zIndex = '99';
       BLOG_WINDOW.style.zIndex = '99';
     });
 
@@ -615,19 +608,19 @@ const initEventListeners = () => {
 
       BLOG_WINDOW.style.zIndex = '100';
       TERMINAL_WINDOW.style.zIndex = '99';
-      PORTFOLIO_WINDOW.style.zIndex = '99';
+      ABOUTME_WINDOW.style.zIndex = '99';
     });
 
     document.addEventListener('mousemove', (e) => {
-      if (isDraggingPortfolio) {
+      if (isDraggingAboutme) {
         let x = e.clientX - dragOffsetX;
         let y = e.clientY - dragOffsetY;
 
-        x = Math.max(0, Math.min(x, window.innerWidth - PORTFOLIO_WINDOW.offsetWidth));
-        y = Math.max(0, Math.min(y, window.innerHeight - PORTFOLIO_WINDOW.offsetHeight));
+        x = Math.max(0, Math.min(x, window.innerWidth - ABOUTME_WINDOW.offsetWidth));
+        y = Math.max(0, Math.min(y, window.innerHeight - ABOUTME_WINDOW.offsetHeight));
 
-        PORTFOLIO_WINDOW.style.left = x + 'px';
-        PORTFOLIO_WINDOW.style.top = y + 'px';
+        ABOUTME_WINDOW.style.left = x + 'px';
+        ABOUTME_WINDOW.style.top = y + 'px';
 
         dragOffsetX = e.clientX - x;
         dragOffsetY = e.clientY - y;
@@ -663,10 +656,10 @@ const initEventListeners = () => {
     });
 
     document.addEventListener('mouseup', () => {
-      isDraggingPortfolio = false;
+      isDraggingAboutme = false;
       isDraggingTerminal = false;
       isDraggingBlog = false;
-      portfolioTitleBar.style.cursor = 'grab';
+      aboutmeTitleBar.style.cursor = 'grab';
       terminalTitleBar.style.cursor = 'grab';
       blogTitleBar.style.cursor = 'grab';
     });

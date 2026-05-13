@@ -267,14 +267,14 @@ footer {
   color: var(--text);
 }
 
-#portfolioBtn:hover, #terminalBtn:hover, #blogBtn:hover {
+#aboutmeBtn:hover, #terminalBtn:hover, #blogBtn:hover {
   scale: 1.1;
   background-color: var(--prompt-1);
   color: var(--bg);
   transition: background-color 0.3s, color 0.3s, scale 0.3s;
 }
 
- #portfolio-bars, #terminal-bars, #blog-bars {
+ #aboutme-bars, #terminal-bars, #blog-bars {
   cursor: grab;   /* visual feedback */
   user-select: none; /* prevent text selection while dragging */
   
@@ -288,7 +288,7 @@ footer {
   background-color: var(--bg);
 }
 
-#portfolio-bars:active, #terminal-bars:active, #blog-bars:active {
+#aboutme-bars:active, #terminal-bars:active, #blog-bars:active {
   cursor: grabbing;
 }
 
@@ -309,8 +309,8 @@ footer {
 }
 /* #endregion */
 
-/* #region Portfolio */
-.portfolio {
+/* #region Aboutme */
+.aboutme {
   gap: 1vh;
   display: inline-grid;
   grid-template-columns: 90%;
@@ -321,30 +321,30 @@ footer {
   width: 100%;
 }
 
-.portfolio-innerbox {
+.aboutme-innerbox {
   height: 100%;
   border: var(--prompt-4) dashed 2px;
 }
 
-.portfolio-about {
+.aboutme-about {
   height: auto;
   padding: 3vh;
   text-align: left;
   overflow: auto;
 }
 
-.portfolio-desc {
+.aboutme-desc {
   padding-top: 1vh;
   text-wrap: wrap;
 }
 
-.portfolio-socials {
+.aboutme-socials {
   text-decoration: none;
   padding: 2vh;
   scale: 1.4;
 }
 
-#portfolio-window {
+#aboutme-window {
   width: 30vw;
 }
 /* #endregion */
