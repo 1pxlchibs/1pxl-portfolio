@@ -6,6 +6,7 @@ import { PROJECTS } from "./commands/projects";
 import { RESUME } from './commands/resume';
 import { createFortune } from './commands/fortune';
 import { createHello } from './commands/hello';
+import weather_codes from "./data/weather_codes.json";
 
 //mutWriteLines gets deleted and reassigned
 let mutWriteLines = document.getElementById("write-lines");
@@ -19,6 +20,9 @@ let bareMode = false;
 
 //WRITELINESCOPY is used to during the "clear" command
 const WRITELINESCOPY = mutWriteLines;
+const PORTFOLIO_WINDOW = document.getElementById("portfolio-window");
+const TERMINAL_WINDOW = document.getElementById("terminal-window");
+const BLOG_WINDOW = document.getElementById("blog-window");
 const TERMINAL = document.getElementById("terminal");
 const USERINPUT = document.getElementById("user-input") as HTMLInputElement;
 const INPUT_HIDDEN = document.getElementById("input-hidden");
@@ -153,10 +157,8 @@ function executeCommand(command: string) {
 }
 
 const scrollToBottom = () => {
-  const MAIN = document.getElementById("main");
-  if(!MAIN) return
-
-  MAIN.scrollTop = MAIN.scrollHeight;
+  if(!TERMINAL_WINDOW) return;
+  TERMINAL_WINDOW.scrollTop = TERMINAL_WINDOW.scrollHeight;
 }
 
 function userInputHandler(e : KeyboardEvent) {
@@ -402,7 +404,7 @@ function passwordHandler() {
 function easterEggStyles() {   
   const bars = document.getElementById("bars");
   const body = document.body;
-  const main = document.getElementById("main");
+  const main = TERMINAL_WINDOW;
   const span = document.getElementsByTagName("span");
 
   if (!bars) return
@@ -429,55 +431,120 @@ function easterEggStyles() {
 // #endregion
 
 // #region Terminal
-function showTerminal(window: string, func: Function = () => {}) {
-  const main = document.querySelector(window) as HTMLElement;
+function showTerminal(window: HTMLElement, func: Function = () => {}) {
+  const main = window as HTMLElement;
   main.style.animation = "none";   // reset animation
   void main.offsetWidth;           // force reflow (important)
-  main.style.animation = "portfolio-terminal ease-out 1s forwards";
-  setTimeout(func,300)
+  main.style.animation = "base-window ease-out .2s forwards";
+  setTimeout(func,5)
 }
 
-function hideTerminal(window: string, func: Function = () => {}) {
-  const main = document.querySelector(window) as HTMLElement;
-  
+function hideTerminal(window: HTMLElement, func: Function = () => {}) {
+  const main = window as HTMLElement;
+
   main.style.animation = "none";   // reset animation
   void main.offsetWidth;           // force reflow (important)
-  main.style.animation = "portfolio-terminal ease-out 1s reverse forwards";
+  main.style.animation = "base-window ease-out .2s reverse forwards";
   main.style.animationDirection = "reverse";
 
-  setTimeout(func, 900);
+  setTimeout(func, 5);
 }
+// #endregion
+
+// #region Other Utility Functions
+function setTime() {
+  const timeElement = document.getElementById("time");
+  if (!timeElement) return;
+  const time = new Date().toLocaleTimeString("en-US", {
+    timeZone: "America/Montreal",
+  });
+
+  timeElement.textContent = time + " - EST";
+}
+setInterval(() => {
+  setTime();
+}, 1000);
+
+async function getForecast() {
+    const url =
+        "https://api.open-meteo.com/v1/forecast?" +
+        "latitude=45.5088" +
+        "&longitude=-73.5878" +
+        "&daily=weather_code,temperature_2m_max,temperature_2m_min" +
+        "&forecast_days=1" +
+        "&timezone=America/New_York";
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const today = {
+        maxTemp: data.daily.temperature_2m_max[0],
+        minTemp: data.daily.temperature_2m_min[0],
+        weatherCode: data.daily.weather_code[0],
+    };
+
+    const weatherElement = document.getElementById("weather");
+    const temperatureElement = document.getElementById("temperature");
+
+   if (weatherElement) {
+        weatherElement.textContent = `${weather_codes[today.weatherCode as keyof typeof weather_codes].day.description}`;
+    }
+    if (temperatureElement) {
+        temperatureElement.textContent = `${today.maxTemp}°C / ${today.minTemp}°C`;
+    }
+}
+
+getForecast();
 // #endregion
 
 // Website initialization & Event Listeners
 const initEventListeners = () => {
+  setTime();
+  
   const portfolioButton = document.querySelector("#portfolioBtn") as HTMLButtonElement;
-  const portfolioExitButton = document.getElementById('exit-button') as HTMLButtonElement;
+  const portfolioExitButton = document.getElementById('portfolio-exit-button') as HTMLButtonElement;
+
+  const terminalButton = document.querySelector("#terminalBtn") as HTMLButtonElement;
+  const terminalExitButton = document.getElementById('exit-button') as HTMLButtonElement;
 
   const blogButton = document.querySelector("#blogBtn") as HTMLButtonElement;
   const blogExitButton = document.getElementById('blog-exit-button') as HTMLButtonElement;
   
   // Portfolio Button
   portfolioButton.addEventListener("click", () => {
-    showTerminal("#main",() => {
+    if (!PORTFOLIO_WINDOW) return;
+    showTerminal(PORTFOLIO_WINDOW);
+  });
+  portfolioExitButton.addEventListener('click', () => {
+    if (!PORTFOLIO_WINDOW) return;
+    hideTerminal(PORTFOLIO_WINDOW);
+  });
+
+  // TerminalButton
+  terminalButton.addEventListener("click", () => {
+    if (!TERMINAL_WINDOW) return;
+    showTerminal(TERMINAL_WINDOW,() => {
       writeLines(ABOUTME);
     
       USERINPUT.addEventListener('keydown', userInputHandler);
       PASSWORD_INPUT.addEventListener('keydown', userInputHandler);
     });
   });
-  portfolioExitButton.addEventListener('click', () => {
-    hideTerminal("#main",() => {
+  terminalExitButton.addEventListener('click', () => {
+    if (!TERMINAL_WINDOW) return;
+    hideTerminal(TERMINAL_WINDOW,() => {
       executeCommand("clear");
     });
   });
 
   // Blog Button
   blogButton.addEventListener("click", () => {
-    showTerminal("#blog-window");
+    if (!BLOG_WINDOW) return;
+    showTerminal(BLOG_WINDOW);
   });
   blogExitButton.addEventListener('click', () => {
-    hideTerminal("#blog-window");
+    if (!BLOG_WINDOW) return;
+    hideTerminal(BLOG_WINDOW);
   });
   
   // Document Loaded Logic
@@ -489,47 +556,66 @@ const initEventListeners = () => {
       scanline.style.animationDuration = (Math.random() * 8) + "s";
     }
 
-    // Draggable Portfolio Terminal Logic
-    const portfolioTerminal = document.querySelector('#main') as HTMLElement;
+    if (!PORTFOLIO_WINDOW || !TERMINAL_WINDOW || !BLOG_WINDOW) return;
+    // Draggable Logic
     const portfolioTitleBar = document.getElementById('portfolio-bars') as HTMLElement;
-
-    const blogTerminal = document.querySelector('#blog-window') as HTMLElement;
+    const terminalTitleBar = document.getElementById('terminal-bars') as HTMLElement;
     const blogTitleBar = document.getElementById('blog-bars') as HTMLElement;
     
+    
     // Center the terminal on load
-    const portfolioWidth = portfolioTerminal.offsetWidth;
-    const blogWidth = blogTerminal.offsetWidth;
+    const portfolioWidth = PORTFOLIO_WINDOW.offsetWidth;
+    const terminalWidth = TERMINAL_WINDOW.offsetWidth;
+    const blogWidth = BLOG_WINDOW.offsetWidth;
+
     const portfolioCenterX = (window.innerWidth - portfolioWidth) / 2;
+    const terminalCenterX = (window.innerWidth - terminalWidth) / 2;
     const blogCenterX = (window.innerWidth - blogWidth) / 2;
 
-    portfolioTerminal.style.left = portfolioCenterX + 'px';
-    blogTerminal.style.left = blogCenterX + 'px';
+    PORTFOLIO_WINDOW.style.left = portfolioCenterX + 'px';
+    TERMINAL_WINDOW.style.left = terminalCenterX + 'px';
+    BLOG_WINDOW.style.left = blogCenterX + 'px';
     
     let isDraggingPortfolio = false;
+    let isDraggingTerminal = false;
     let isDraggingBlog = false;
     let dragOffsetX = 0;
     let dragOffsetY = 0;
 
-    portfolioTitleBar.addEventListener('mousedown', (e) => {
+    portfolioTitleBar.addEventListener('mousedown', (e) => {  
       isDraggingPortfolio = true;
-      const rect = portfolioTerminal.getBoundingClientRect();
+      const rect = PORTFOLIO_WINDOW.getBoundingClientRect();
       dragOffsetX = e.clientX - rect.left;
       dragOffsetY = e.clientY - rect.top;
       portfolioTitleBar.style.cursor = 'grabbing';
 
-      portfolioTerminal.style.zIndex = '100';
-      blogTerminal.style.zIndex = '99';
+      PORTFOLIO_WINDOW.style.zIndex = '100';
+      TERMINAL_WINDOW.style.zIndex = '99';
+      BLOG_WINDOW.style.zIndex = '99';
+    });
+
+    terminalTitleBar.addEventListener('mousedown', (e) => {
+      isDraggingTerminal = true;
+      const rect = TERMINAL_WINDOW.getBoundingClientRect();
+      dragOffsetX = e.clientX - rect.left;
+      dragOffsetY = e.clientY - rect.top;
+      terminalTitleBar.style.cursor = 'grabbing';
+
+      TERMINAL_WINDOW.style.zIndex = '100';
+      PORTFOLIO_WINDOW.style.zIndex = '99';
+      BLOG_WINDOW.style.zIndex = '99';
     });
 
     blogTitleBar.addEventListener('mousedown', (e) => {
       isDraggingBlog = true;
-      const rect = blogTerminal.getBoundingClientRect();
+      const rect = BLOG_WINDOW.getBoundingClientRect();
       dragOffsetX = e.clientX - rect.left;
       dragOffsetY = e.clientY - rect.top;
       blogTitleBar.style.cursor = 'grabbing';
 
-      blogTerminal.style.zIndex = '100';
-      portfolioTerminal.style.zIndex = '99';
+      BLOG_WINDOW.style.zIndex = '100';
+      TERMINAL_WINDOW.style.zIndex = '99';
+      PORTFOLIO_WINDOW.style.zIndex = '99';
     });
 
     document.addEventListener('mousemove', (e) => {
@@ -537,24 +623,39 @@ const initEventListeners = () => {
         let x = e.clientX - dragOffsetX;
         let y = e.clientY - dragOffsetY;
 
-        x = Math.max(0, Math.min(x, window.innerWidth - portfolioTerminal.offsetWidth));
-        y = Math.max(0, Math.min(y, window.innerHeight - portfolioTerminal.offsetHeight));
+        x = Math.max(0, Math.min(x, window.innerWidth - PORTFOLIO_WINDOW.offsetWidth));
+        y = Math.max(0, Math.min(y, window.innerHeight - PORTFOLIO_WINDOW.offsetHeight));
 
-        portfolioTerminal.style.left = x + 'px';
-        portfolioTerminal.style.top = y + 'px';
+        PORTFOLIO_WINDOW.style.left = x + 'px';
+        PORTFOLIO_WINDOW.style.top = y + 'px';
 
         dragOffsetX = e.clientX - x;
         dragOffsetY = e.clientY - y;
       }
+
+      if (isDraggingTerminal) {
+        let x = e.clientX - dragOffsetX;
+        let y = e.clientY - dragOffsetY;
+
+        x = Math.max(0, Math.min(x, window.innerWidth - TERMINAL_WINDOW.offsetWidth));
+        y = Math.max(0, Math.min(y, window.innerHeight - TERMINAL_WINDOW.offsetHeight));
+
+        TERMINAL_WINDOW.style.left = x + 'px';
+        TERMINAL_WINDOW.style.top = y + 'px';
+
+        dragOffsetX = e.clientX - x;
+        dragOffsetY = e.clientY - y;
+      }
+
       if (isDraggingBlog) {
         let x = e.clientX - dragOffsetX;
         let y = e.clientY - dragOffsetY;
 
-        x = Math.max(0, Math.min(x, window.innerWidth - blogTerminal.offsetWidth));
-        y = Math.max(0, Math.min(y, window.innerHeight - blogTerminal.offsetHeight));
+        x = Math.max(0, Math.min(x, window.innerWidth - BLOG_WINDOW.offsetWidth));
+        y = Math.max(0, Math.min(y, window.innerHeight - BLOG_WINDOW.offsetHeight));
 
-        blogTerminal.style.left = x + 'px';
-        blogTerminal.style.top = y + 'px';
+        BLOG_WINDOW.style.left = x + 'px';
+        BLOG_WINDOW.style.top = y + 'px';
 
         dragOffsetX = e.clientX - x;
         dragOffsetY = e.clientY - y;
@@ -563,8 +664,10 @@ const initEventListeners = () => {
 
     document.addEventListener('mouseup', () => {
       isDraggingPortfolio = false;
+      isDraggingTerminal = false;
       isDraggingBlog = false;
       portfolioTitleBar.style.cursor = 'grab';
+      terminalTitleBar.style.cursor = 'grab';
       blogTitleBar.style.cursor = 'grab';
     });
   });
