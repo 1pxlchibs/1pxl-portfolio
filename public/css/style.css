@@ -55,10 +55,19 @@
 	to {transform: rotateY(360deg);}
 }
 
-
 @keyframes base-window {
 	from {opacity: 0%; height: 0%;}
 	to {opacity: 100%; height: 90%;}
+}
+
+@keyframes slogan {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 /* #endregion */
 
@@ -82,6 +91,7 @@ body {
 
 h1 {
   font-size: xx-large;
+  line-height: 40px;
 }
 
 h2 {
@@ -184,6 +194,24 @@ footer {
 	animation: scanline linear 8s infinite;
 	pointer-events: none;
 }
+
+.slogan {
+  font-size: 20px;
+  display:grid;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  width: 100%;
+  height: 100%;
+  color: var(--prompt-1);
+  
+  opacity: 0;
+  animation: slogan ease-in-out 1.5s;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+
+  user-select: none;
+}
 /* #endregion */
 
 /* #region Base Window */
@@ -193,7 +221,7 @@ footer {
   left: 50px;
   z-index: 1000;  /* ensure it stays on top */
   border-width: 1px;
-  width: 85vw;
+  width: 90vw;
   height: 0%;
   opacity: 0%;
   display: block;
@@ -253,7 +281,7 @@ footer {
 /* #endregion */
 
 /* #region Window Elements */
-#exit-button {
+#aboutme-exit-button, #projects-exit-button, #exit-button, #blog-exit-button {
   color: black;
   line-height: 36px;
   padding-left: 10px;
@@ -263,18 +291,18 @@ footer {
   display: flex;
 }
 
-#exit-button:hover {
+#aboutme-exit-button:hover, #projects-exit-button:hover, #exit-button:hover, #blog-exit-button:hover {
   color: var(--text);
 }
 
-#aboutmeBtn:hover, #terminalBtn:hover, #blogBtn:hover {
+#aboutmeBtn:hover, #projectsBtn:hover, #terminalBtn:hover, #blogBtn:hover {
   scale: 1.1;
   background-color: var(--prompt-1);
   color: var(--bg);
   transition: background-color 0.3s, color 0.3s, scale 0.3s;
 }
 
- #aboutme-bars, #terminal-bars, #blog-bars {
+ #aboutme-bars, #projects-bars, #terminal-bars, #blog-bars {
   cursor: grab;   /* visual feedback */
   user-select: none; /* prevent text selection while dragging */
   
@@ -288,7 +316,7 @@ footer {
   background-color: var(--bg);
 }
 
-#aboutme-bars:active, #terminal-bars:active, #blog-bars:active {
+#aboutme-bars:active, #projects-bars:active, #terminal-bars:active, #blog-bars:active {
   cursor: grabbing;
 }
 
@@ -346,6 +374,24 @@ footer {
 
 #aboutme-window {
   width: 30vw;
+}
+/* #endregion */
+
+/* #region Projects */
+.project {
+  padding: 2vh;
+  gap: 2vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.project-img {
+  height: 300px;
+  border-radius: 20px;
+}
+
+#projects-window {
+  width: 55vw;
 }
 /* #endregion */
 

@@ -23,14 +23,16 @@
 <body>
   <!-- Background and Visual Effects -->
   <div id="stage"></div>
+  <h1 class="slogan">I make games, one pixel at a time.</h1>
   <div class="scanline"></div>
   <div id="blur"></div>
 
   <!-- Desktop Buttons -->
   <div class="desktop-buttons">
     <a id="aboutmeBtn" class="fa-solid fa-user desktop-button"><div class="desktop-button-text">About Me</div></a>
+    <a id="projectsBtn" class="fa-solid fa-folder-open desktop-button"><div class="desktop-button-text">Projects</div></a>
     <a id="terminalBtn" class="fa-solid fa-terminal desktop-button"><div class="desktop-button-text">Terminal</div></a>
-    <a id="blogBtn" class="fa-solid fa-folder-open desktop-button"><div class="desktop-button-text">Blog</div></a>
+    <a id="blogBtn" class="fa-solid fa-book desktop-button"><div class="desktop-button-text">Blog</div></a>
   </div>
 
   <!-- About Me Window -->
@@ -58,6 +60,36 @@
           <a class="aboutme-socials fa-brands fa-linkedin" href='https://www.linkedin.com/in/enrique-poirier-4a73b8256/'></a>
         </div>
       </div>
+    </div>
+  </article>
+
+  <!-- Projects -->
+  <article id="projects-window" class="base-window">
+    <div id="projects-bars">
+      <div id="bar-1">projects.exe<a id="projects-exit-button" class="fa-solid fa-xmark"></a></div>
+    </div>
+    <div class="project">
+      <img class="project-img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1360660/ss_2666e587dc2a6594356466b2c2226d2ae7b40b03.1920x1080.jpg?t=1774489238">
+      <div style="padding: 1vh;">
+        <h1>Neon Blight</h1>
+        <p style="overflow: auto; text-wrap: wrap;">Fight through dystopian cyberspace, collect hundreds of firearms, establish an exotic black market gun store, cater to other cyberpunk runners, and work towards the ultimate payday in this neon-rogue-lite, store management, shoot 'em up.</p>
+      </div>    
+    </div>
+
+    <div class="project">
+      <div style="padding: 1vh;">
+        <h1>PXLUI</h1>
+        <p style="overflow: auto; text-wrap: wrap;">A full scale game UI framework built in GML. Create UI screens using a data driven method, allowing ease of customization</p>
+      </div>  
+      <img class="project-img" src="/assets/pxlui_controller.png">  
+    </div>
+
+    <div class="project">
+      <img class="project-img" src="https://files.gm48.net/games/2242/media/8258/conversions/Runner_2026_0315_1953-normal.png?v=1773618993">  
+      <div style="padding: 1vh;">
+        <h1>Dungeon Taxing Committee</h1>
+        <p style="overflow: auto; text-wrap: wrap;">Play as a knight who has to pay off his debt for a crime they've committed. Can you repay your debt in time? Or will you perish to the wizard overlords? A small solo game jam made in 48h for the 48th GM48. Place 20th out of 91 submisions!</p>
+      </div>  
     </div>
   </article>
 

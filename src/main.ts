@@ -21,6 +21,7 @@ let bareMode = false;
 //WRITELINESCOPY is used to during the "clear" command
 const WRITELINESCOPY = mutWriteLines;
 const ABOUTME_WINDOW = document.getElementById("aboutme-window");
+const PROJECTS_WINDOW = document.getElementById("projects-window");
 const TERMINAL_WINDOW = document.getElementById("terminal-window");
 const BLOG_WINDOW = document.getElementById("blog-window");
 const TERMINAL = document.getElementById("terminal");
@@ -429,6 +430,15 @@ function showTerminal(window: HTMLElement, func: Function = () => {}) {
   main.style.animation = "none";   // reset animation
   void main.offsetWidth;           // force reflow (important)
   main.style.animation = "base-window ease-out .2s forwards";
+
+  if (!ABOUTME_WINDOW || !PROJECTS_WINDOW || !TERMINAL_WINDOW || !BLOG_WINDOW) return;
+  ABOUTME_WINDOW.style.zIndex = '99';
+  PROJECTS_WINDOW.style.zIndex = '99';
+  TERMINAL_WINDOW.style.zIndex = '99';
+  BLOG_WINDOW.style.zIndex = '99';
+
+  main.style.zIndex = '100';
+
   setTimeout(func,5)
 }
 
@@ -497,6 +507,9 @@ const initEventListeners = () => {
   const aboutmeButton = document.querySelector("#aboutmeBtn") as HTMLButtonElement;
   const aboutmeExitButton = document.getElementById('aboutme-exit-button') as HTMLButtonElement;
 
+  const projectsButton = document.querySelector("#projectsBtn") as HTMLButtonElement;
+  const projectsExitButton = document.getElementById('projects-exit-button') as HTMLButtonElement;
+
   const terminalButton = document.querySelector("#terminalBtn") as HTMLButtonElement;
   const terminalExitButton = document.getElementById('exit-button') as HTMLButtonElement;
 
@@ -511,6 +524,17 @@ const initEventListeners = () => {
   aboutmeExitButton.addEventListener('click', () => {
     if (!ABOUTME_WINDOW) return;
     hideTerminal(ABOUTME_WINDOW);
+  });
+
+  // Projects Button
+  projectsButton.addEventListener("click", () => {
+    console.log("test")
+    if (!PROJECTS_WINDOW) return;
+    showTerminal(PROJECTS_WINDOW);
+  });
+  projectsExitButton.addEventListener('click', () => {
+    if (!PROJECTS_WINDOW) return;
+    hideTerminal(PROJECTS_WINDOW);
   });
 
   // TerminalButton
@@ -549,27 +573,32 @@ const initEventListeners = () => {
       scanline.style.animationDuration = (Math.random() * 8) + "s";
     }
 
-    if (!ABOUTME_WINDOW || !TERMINAL_WINDOW || !BLOG_WINDOW) return;
+    if (!ABOUTME_WINDOW || !PROJECTS_WINDOW || !TERMINAL_WINDOW || !BLOG_WINDOW) return;
     // Draggable Logic
     const aboutmeTitleBar = document.getElementById('aboutme-bars') as HTMLElement;
+    const projectsTitleBar = document.getElementById('projects-bars') as HTMLElement;
     const terminalTitleBar = document.getElementById('terminal-bars') as HTMLElement;
     const blogTitleBar = document.getElementById('blog-bars') as HTMLElement;
     
     
     // Center the terminal on load
     const aboutmeWidth = ABOUTME_WINDOW.offsetWidth;
+    const projectsWidth = PROJECTS_WINDOW.offsetWidth;
     const terminalWidth = TERMINAL_WINDOW.offsetWidth;
     const blogWidth = BLOG_WINDOW.offsetWidth;
 
-    const aboutmeCenterX = (window.innerWidth - aboutmeWidth) / 2;
-    const terminalCenterX = (window.innerWidth - terminalWidth) / 2;
-    const blogCenterX = (window.innerWidth - blogWidth) / 2;
+    const aboutmeCenterX = (window.innerWidth - aboutmeWidth) * .1;
+    const projectsCenterX = (window.innerWidth - projectsWidth) * .93;
+    const terminalCenterX = (window.innerWidth - terminalWidth) * .7;
+    const blogCenterX = (window.innerWidth - blogWidth) * .7;
 
     ABOUTME_WINDOW.style.left = aboutmeCenterX + 'px';
+    PROJECTS_WINDOW.style.left = projectsCenterX + 'px';
     TERMINAL_WINDOW.style.left = terminalCenterX + 'px';
     BLOG_WINDOW.style.left = blogCenterX + 'px';
     
     let isDraggingAboutme = false;
+    let isDraggingProjects = false;
     let isDraggingTerminal = false;
     let isDraggingBlog = false;
     let dragOffsetX = 0;
@@ -583,6 +612,20 @@ const initEventListeners = () => {
       aboutmeTitleBar.style.cursor = 'grabbing';
 
       ABOUTME_WINDOW.style.zIndex = '100';
+      PROJECTS_WINDOW.style.zIndex = '99';
+      TERMINAL_WINDOW.style.zIndex = '99';
+      BLOG_WINDOW.style.zIndex = '99';
+    });
+
+    projectsTitleBar.addEventListener('mousedown', (e) => {  
+      isDraggingProjects = true;
+      const rect = PROJECTS_WINDOW.getBoundingClientRect();
+      dragOffsetX = e.clientX - rect.left;
+      dragOffsetY = e.clientY - rect.top;
+      projectsTitleBar.style.cursor = 'grabbing';
+
+      PROJECTS_WINDOW.style.zIndex = '100';
+      ABOUTME_WINDOW.style.zIndex = '100';
       TERMINAL_WINDOW.style.zIndex = '99';
       BLOG_WINDOW.style.zIndex = '99';
     });
@@ -595,6 +638,7 @@ const initEventListeners = () => {
       terminalTitleBar.style.cursor = 'grabbing';
 
       TERMINAL_WINDOW.style.zIndex = '100';
+      PROJECTS_WINDOW.style.zIndex = '99';
       ABOUTME_WINDOW.style.zIndex = '99';
       BLOG_WINDOW.style.zIndex = '99';
     });
@@ -607,6 +651,7 @@ const initEventListeners = () => {
       blogTitleBar.style.cursor = 'grabbing';
 
       BLOG_WINDOW.style.zIndex = '100';
+      PROJECTS_WINDOW.style.zIndex = '99';
       TERMINAL_WINDOW.style.zIndex = '99';
       ABOUTME_WINDOW.style.zIndex = '99';
     });
@@ -621,6 +666,20 @@ const initEventListeners = () => {
 
         ABOUTME_WINDOW.style.left = x + 'px';
         ABOUTME_WINDOW.style.top = y + 'px';
+
+        dragOffsetX = e.clientX - x;
+        dragOffsetY = e.clientY - y;
+      }
+
+      if (isDraggingProjects) {
+        let x = e.clientX - dragOffsetX;
+        let y = e.clientY - dragOffsetY;
+
+        x = Math.max(0, Math.min(x, window.innerWidth - PROJECTS_WINDOW.offsetWidth));
+        y = Math.max(0, Math.min(y, window.innerHeight - PROJECTS_WINDOW.offsetHeight));
+
+        PROJECTS_WINDOW.style.left = x + 'px';
+        PROJECTS_WINDOW.style.top = y + 'px';
 
         dragOffsetX = e.clientX - x;
         dragOffsetY = e.clientY - y;
@@ -657,9 +716,11 @@ const initEventListeners = () => {
 
     document.addEventListener('mouseup', () => {
       isDraggingAboutme = false;
+      isDraggingProjects = false;
       isDraggingTerminal = false;
       isDraggingBlog = false;
       aboutmeTitleBar.style.cursor = 'grab';
+      projectsTitleBar.style.cursor = 'grab';
       terminalTitleBar.style.cursor = 'grab';
       blogTitleBar.style.cursor = 'grab';
     });
